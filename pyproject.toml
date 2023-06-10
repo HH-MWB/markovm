@@ -1,15 +1,9 @@
-[build-system]
-requires = [
-  "setuptools",
-]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "markovm"
-description = "Markovm is a Python library for Markov Models."
+description = "Python library for Markov Models."
 readme = "README.md"
 requires-python = ">=3.7"
-license = {file = "LICENSE"}
+license = {text = "MIT"}
 keywords = [
   "markov model",
   "markov chain",
@@ -19,6 +13,8 @@ authors = [
 ]
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
@@ -28,7 +24,7 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 dependencies = [
-  "numpy~=1.0",
+  "numpy~=1.20",
 ]
 dynamic = [
   "version",
@@ -41,3 +37,9 @@ dynamic = [
 
 [tool.setuptools.dynamic]
 version = {attr = "markovm.__version__"}
+
+[build-system]
+requires = [
+  "setuptools",
+]
+build-backend = "setuptools.build_meta"

@@ -1,13 +1,13 @@
-"""MarkovM: a Python library for Markov Models."""
+"""MarkovM: Python library for Markov Models."""
 
 from dataclasses import dataclass
-from typing import Any, Generator, Iterable, Optional, Tuple
+from typing import Any, Generator, Iterable, Optional
 
 from numpy import float64, newaxis
 from numpy.random import default_rng
 from numpy.typing import NDArray
 
-__version__: str = "0.0.1"
+__version__: str = "0.1.0"
 
 
 @dataclass(eq=False, frozen=True)
@@ -23,7 +23,7 @@ class MarkovModel:
     state_space : tuple
         The collection of states in the Markov model.
     transition_matrix : NDArray
-        The matrix describing the probabilities of transitions.
+        The matrix describes the probabilities of transitions.
     """
 
     __slots__ = ["state_space", "transition_matrix"]
@@ -33,10 +33,10 @@ class MarkovModel:
 
 
 def create_markov_model(states: Iterable, transitions: NDArray) -> MarkovModel:
-    """Create markov model.
+    """Create a Markov model.
 
     Provides an easy way to create a new Markov model and ensure the
-    transition matrix is valid by normalizing the transition argument
+    the transition matrix is valid by normalizing the transition argument
     automatically.
 
     Parameters
@@ -44,38 +44,38 @@ def create_markov_model(states: Iterable, transitions: NDArray) -> MarkovModel:
     states : Iterable
         The collection of states in the Markov model.
     transitions : NDArray
-        The matrix to be normalized and serve as transition matrix.
+        The matrix is to be normalized and serve as the transition matrix.
 
     Returns
     -------
     MarkovModel
-        A newly created markov model.
+        A newly created Markov model.
 
     Raises
     ------
     ValueError
         The shape of the transitions didn't match the total number of
-        states. Given n states, the transitions matrix should be n by n.
+        states. Given n states, the transitions matrix should be n-by-n.
     """
-    # iterate though states and store as a tuple
+    # iterate through states and store as a tuple
     state_space = tuple(states)
 
-    # verify if transition shape maches with state size
+    # verify if the transition shape matches with state size
     num_of_states = len(state_space)
     if transitions.shape != (num_of_states, num_of_states):
         raise ValueError("shape misatch between states and transitions")
 
-    # normalize tansitions
+    # normalize transitions
     transition_matrix = transitions / transitions.sum(axis=1)[:, newaxis]
 
-    # create markov model and return
+    # create a new Markov model and return
     return MarkovModel(state_space, transition_matrix)
 
 
 def random_walk(
     model: MarkovModel, index: int = 0, seed: Optional[int] = None
 ) -> Generator[Any, None, None]:
-    """Random walk through a markov model.
+    """Randomly walk through the Markov model.
 
     Parameters
     ----------
@@ -84,22 +84,13 @@ def random_walk(
     index : int, optional
         The index of the initial state, by default 0.
     seed : int, optional
-        The seed to be used to generate random move, by default None.
+        The seed is to be used to generate random moves, by default None.
 
     Yields
     ------
     state : Any
-        The state after taking a step.
-
-    Raises
-    ------
-    IndexError
-        Invalid index of the initial state. Either less than zero or
-        greater than the total number of states.
+        The state after taking a random move.
     """
-    if not (0 <= index < len(model.state_space)):
-        raise IndexError(f"index {index} is out of range")
-
     idxes = tuple(i for i, _ in enumerate(model.state_space))
     rng = default_rng(seed=seed)
 

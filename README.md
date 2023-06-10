@@ -1,4 +1,10 @@
-# MarkovM
+<p align="center">
+  <a href="https://github.com/HH-MWB/markovm">
+    <img src="https://user-images.githubusercontent.com/50187675/244896432-f28357ec-2ced-4095-aef1-fca6a73dd983.png" alt="MarkovM">
+  </a>
+</p>
+
+<p align="center"><strong>MarkovM</strong> - <em>Python library for Markov Models.</em></p>
 
 <p align="center">
     <a href="https://github.com/HH-MWB/markovm/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/pypi/l/markovm.svg"></a>
@@ -26,6 +32,8 @@ pip install .
 
 ### Create Model
 
+You can use `markovm.create_markov_model` to create a Markov model. Please provide all valid states and an n-by-n matrix describing the probabilities of transitions, where n is the number of states. If two states `i` and `j` do not have a connection in between, set `matrix[i][j]` to `0`. For example,
+
 ```python
 >>> import markovm
 >>> import numpy
@@ -40,6 +48,8 @@ pip install .
 ```
 
 ### Random Walk
+
+You can use `markovm.random_walk` to randomly walk through a Markov model. By default, it will start with the first state. If you want it to start with another state, please provide the index of the expected starting state to `index` in the function call. You can also set a seed to the function call, and it uses `None` by default. For example,
 
 ```python
 >>> import itertools
